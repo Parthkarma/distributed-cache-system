@@ -14,6 +14,7 @@ class LruCacheTest {
  void setUp() {
   // Initialize cache with capacity of 2 for testing eviction
   cache = new LruCache<>(2);
+
  }
 
  @Test
@@ -24,7 +25,6 @@ class LruCacheTest {
   assertEquals("value1", cache.get("key1").get());
   assertEquals("value2", cache.get("key2").get());
  }
-
 
  @Test
  void testEvictionPolicy() {
@@ -67,7 +67,6 @@ class LruCacheTest {
   assertTrue(cache.remove("key1"));
   assertFalse(cache.remove("key1")); // Should return false if not found
  }
-
  @Test
  void testSizeAndContainsKey() {
   cache.put("key1", "value1");

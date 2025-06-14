@@ -1,32 +1,25 @@
 package com.cache.impl;
-
 import com.cache.core.Cache;
 import java.util.Optional;
 import java.util.HashMap;
-
 public class LruCache<K, V> implements Cache<K, V> {
-
  private final int capacity;
  private final HashMap<K, Node> cache;
  private final DoublyLinkedList usageOrder;
-
  public LruCache(int capacity) {
   this.capacity = capacity;
   this.cache = new HashMap<>();
   this.usageOrder = new DoublyLinkedList();
  }
-
  @Override
  public Optional<V> get(K key) {
   if (!cache.containsKey(key)) {
    return Optional.empty();
   }
-
   Node node = cache.get(key);
   usageOrder.moveToFront(node);
   return Optional.of(node.value);
  }
-
  @Override
  public void put(K key, V value) {
   if (cache.containsKey(key)) {
@@ -38,7 +31,6 @@ public class LruCache<K, V> implements Cache<K, V> {
     K lruKey = usageOrder.removeLast();
     cache.remove(lruKey);
    }
-
    Node newNode = new Node(key, value);
    cache.put(key, newNode);
    usageOrder.addToFront(newNode);
@@ -50,7 +42,6 @@ public class LruCache<K, V> implements Cache<K, V> {
   if (!cache.containsKey(key)) {
    return false;
   }
-
   Node node = cache.get(key);
   usageOrder.remove(node);
   cache.remove(key);
@@ -101,7 +92,6 @@ public class LruCache<K, V> implements Cache<K, V> {
     node.prev = null;
    }
   }
-
   void remove(Node node) {
    if (node.prev != null) {
     node.prev.next = node.next;
@@ -121,7 +111,6 @@ public class LruCache<K, V> implements Cache<K, V> {
    remove(node);
    addToFront(node);
   }
-
   K removeLast() {
    if (tail == null) return null;
    K key = tail.key;
@@ -133,7 +122,6 @@ public class LruCache<K, V> implements Cache<K, V> {
    }
    return key;
   }
-
   void clear() {
    head = tail = null;
   }

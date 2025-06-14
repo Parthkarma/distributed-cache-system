@@ -35,7 +35,6 @@ public class SimpleHashMapCacheTest {
   // Should be empty
   assertFalse(result.isPresent());
  }
-
  @Test
  void testSize() {
   assertEquals(0, cache.size());
